@@ -1,0 +1,39 @@
+{% extends"layout.html" %}
+{% block body %}
+    <form class="form-horizontal panel-body" action="{{ url_for("regedit") }}" method="post" role="form">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">欢迎注册</h3>
+                        </div>
+                        <div class="row  panel-body">
+                            <div class="form-group">
+                                <label for="firstname" class="col-sm-3 control-label">用户姓名:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="firstname" name="firstname" required="required" placeholder="请输入姓名！">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="username" class="col-sm-3 control-label">登录账户:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="username" name="username" required="required" placeholder="请输入账户名！">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-3 control-label">邮箱地址:</label>
+                                <div class="col-xs-4">
+                                    <input type="email" class="form-control" id="email" name="email" required="required" placeholder="请输入邮箱地址！">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-3 control-label">登录密码:</label>
+                                <div class="col-xs-4">
+                                    <input type="password" class="form-control" id="password" name="password" required="required" placeholder="请输入登录密码！">
+                                </div>
+                            </div>
+                            <div class="text-center col-lg-offset-1">
+                                <button type="submit" class="btn btn-primary btn-lg col-xs-7">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+{% endblock %}
