@@ -1,6 +1,6 @@
 {% extends "layout.html"  %}
 {% block body %}
-                <form class="form-horizontal panel-body" action="/add/" method="post" role="form">
+                <form class="form-horizontal panel-body" action="{{ url_for("add",deployType=deployType) }}" method="post" role="form">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title text-center">任务单号</h3>

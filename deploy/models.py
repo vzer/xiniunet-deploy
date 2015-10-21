@@ -43,7 +43,7 @@ class User(db.Model):
         self.nick_name=nick_name
         self.isactive=True
         self.isadmin=True
-        self.createdate=datetime.datetime.now()
+        self.createdate=db.func.now()
 
     def __repr__(self):
         return "<User '{:s}'> ".format(self.nick_name)

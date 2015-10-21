@@ -13,8 +13,10 @@ def internal_error(error):
 @app.route('/')
 def index():
     totlelogs=TaskLogs.query.count()
-    todaylogs=TaskLogs.query.filter(TaskLogs.logtime.between("2015-10-20","2015-10-20")).count()
-    return render_template("index.html",totlelogs=totlelogs,todaylogs=todaylogs)
+    todaylogs=TaskLogs.query.filter(db.func.to_days(TaskLogs.logtime)==db.func.to_days(db.func.now()))
+    todaylogscount=todaylogs.count()
+    todaylogslist=todaylogs.all()
+    return render_template("index.html",totlelogs=totlelogs,todaylogscount=todaylogscount,todaylogslist=todaylogslist)
 
 @app.route(("/view/"))
 @app.route("/view/<workOrder>")
@@ -36,7 +38,7 @@ def add(deployType="ALL"):
             modelMap=Models.query.order_by(Models.model_id.desc()).all()
         else:
             modelMap=Models.query.filter_by(deploy_type=deployType).order_by(Models.mode_pet.desc()).all()
-        return render_template("add.html",workorder=workOrder,modelmap=modelMap)
+        return render_template("add.html",deployType=deployType,workorder=workOrder,modelmap=modelMap)
     elif request.method=="POST":
         print deployType
         modelPet=request.form["models"]
