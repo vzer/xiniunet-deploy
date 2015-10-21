@@ -98,6 +98,18 @@ def regedit():
         flash("用户注册成功,请登录。")
         return redirect(url_for("login"))
 
-
+@app.route("/statistics/<selecttimes>")
+def statis(selecttimes="ALL"):
+    if selecttimes=="ALL":
+        pass
+    elif selecttimes=="today":
+        pass
+    elif selecttimes=="week":
+        pass
+    elif selecttimes=="month":
+        pass
+    elif selecttimes=="year":
+        pass
+    pass
 
 
