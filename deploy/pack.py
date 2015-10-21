@@ -5,13 +5,14 @@ __author__ = 'vzer'
 
 try:
     from pexpect import pxssh
+    import paramiko
 except ImportError,msg:
     print(u'本地环境，无此模块！')
 import os
 import subprocess
 import multiprocessing as mp
 import time
-import paramiko
+
 import socket
 from . import db
 from models import TaskLogs,resoveXml

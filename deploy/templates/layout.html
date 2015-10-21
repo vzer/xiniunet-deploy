@@ -20,7 +20,10 @@
 	<link rel="stylesheet" href="../static/css/zerogrid.css">
 	<link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/responsive.css">
-
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
+	<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
 
     <link href='../static/images/logo.png' rel='icon' type='image/x-icon'/>
 
@@ -67,7 +70,12 @@
 					<div class="col-full">
 						<div class="wrap-col">
                            {% for message in get_flashed_messages() %}
-                            <div><p class="text-center text-success">{{ message }}</p> </div>
+                            <div class="alert alert-success">
+				 				<button type="button" class="close" data-dismiss="alert">×</button>
+								<h4>
+									提示!
+								</h4>{{ message }}
+			</div>
                             {% endfor %}
                             {% block body %} {% endblock %}
 						</div>
