@@ -4,6 +4,7 @@
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
+    <title>犀牛网络发布平台</title>
 	<!--  Page Needs -->
 	<meta charset="utf-8">
     {% block head %}
@@ -14,18 +15,19 @@
 	<meta name="baidu-site-verification" content="iMjzOClF2L" />
     <meta property="wb:webmaster" content="d07ab237c0e07028" />
     <!-- BootStrap -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/3.0.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
 	<!-- CSS -->
 	<link rel="stylesheet" href="../static/css/zerogrid.css">
 	<link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/responsive.css">
-	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
-	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
-	<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
-	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
+    <link href="../static/css/common.css" rel="stylesheet">
+    <link href="../static/css/application.css" rel="stylesheet">
+	<script type="text/javascript" src="../static/js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="../static/js/jquery-ui"></script>
+	<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 
-    <link href='../static/images/logo.png' rel='icon' type='image/x-icon'/>
+    <link href='../static/images/favicon.ico' rel='icon' type='image/x-icon'/>
 
     <!--[if lt IE 8]>
        <div style=' clear: both; text-align:center; position: relative;'>
@@ -44,7 +46,7 @@
 	<!-- Header -->
 	<header>
 		<div class="wrap-header zerogrid">
-			<div id="logo"><a href="{{ url_for('add') }}"><img src="../static/images/newlogo.png"/></a></div>
+			<div id="logo"><a href="{{ url_for('index') }}"><img src="../static/images/xiniu.png"/></a></div>
 			<nav>
 				<div class="wrap-nav ">
 					<div class="menu">
@@ -72,10 +74,8 @@
                            {% for message in get_flashed_messages() %}
                             <div class="alert alert-success">
 				 				<button type="button" class="close" data-dismiss="alert">×</button>
-								<h4>
-									提示!
-								</h4>{{ message }}
-			</div>
+                                {{ message }}
+			                </div>
                             {% endfor %}
                             {% block body %} {% endblock %}
 						</div>
@@ -85,7 +85,11 @@
 			<div id="sidebar" class="col-1-4">
 				<div class="wrap-col">
 					<div class="box">
-						<div class="heading"><h4 class="title">发布选择</h4></div>
+                        {% if session.logged_in %}
+						<div class="heading"><h4 class="title text-center">当前用户：{{ session.username }}</h4></div>
+                        {% else %}
+                        <div class="heading"><h4 class="title text-center">请登录！</h4></div>
+                        {% endif %}
 						<div class="content">
 							<div class="connect">
                                 <div class="thumbnail">
@@ -98,23 +102,9 @@
 							                <li><a href="{{ url_for('add',deployType="pos") }}">发布pos</a></li>
 							                <li><a href="{{ url_for('add',deployType="dfl") }}">发布大发</a></li>
 							                <li><a href="{{ url_for('add',deployType="harson") }}">发布harson</a></li>
-							                <li><a href="{{ url_for('add',deployType="harson") }}">查看工单</a></li>
-							                <li><a href="{{ url_for('add',deployType="harson") }}">发布统计</a></li>
+							                <li><a href="{{ url_for('add',deployType="harson") }}">查看日志</a></li>
+							                <li><a href="{{ url_for("statis") }}">发布统计</a></li>
 						                </ul>
-                                    </div>
-                                </div>
-							</div>
-						</div>
-					</div>
-                    <div class="box">
-						<div class="heading"><h4 class="title">发布选择</h4></div>
-						<div class="content">
-							<div class="connect">
-                                <div class="thumbnail">
-                                    <img src="../static/images/myhead.png" alt="'">
-                                    <div class="caption">
-                                       <div style="text-align:center;"><h4 style="text-transform:none;">NoGameNoLife</h4></div>
-                                        <p>&nbsp; &nbsp;一名普通到不能再普通到大学生。喜欢编程，喜欢动漫的死宅，目标成为一名技术宅..... </p>
                                     </div>
                                 </div>
 							</div>
@@ -147,19 +137,21 @@
 					<div class="box">
 						<div class="heading"><h4 class="title">About Us</h4></div>
 						<div class="content">
+                            <p>犀牛网络配置管理</p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-1-3">
+			<div class="col-1-3 ">
 				<div class="wrap-col">
 					<div class="box">
-						<div class="heading"><h4 class="title">友情链接</h4></div>
+						<div class="heading"><h4 class="title">内部链接</h4></div>
 						<div class="content">
-                            {% for link in links %}
-                            
-                            <p><a href="{{ link.link }}" target="_blank">{{ link.name }}</a></p>
-                            {% endfor %}
+                            <p><a href="http://gitlab.xiniunet.com">项目gitlab</a></p>
+                            <p><a href="http://gitlab2.xiniunet.com">平台gitlab</a></p>
+                            <p><a href="http://gitlab3.xiniunet.com">孵化器gitlab</a></p>
+                            <p><a href="http://gitlab4.xiniunet.com">产品gitlab</a></p>
+                            <p><a href="http://gitlab5.xiniunet.com">中恒gitlab</a></p>
 						</div>
 					</div>
 				</div>
@@ -167,7 +159,7 @@
 		</div>
 	</div>
 	<div class="copyright">
-        <p>Copyright © 2012 - 2015</p>
+        <p>Copyright © 2014 - 2015</p>
 	</div>
 </footer>
 </div>

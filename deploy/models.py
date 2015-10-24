@@ -66,6 +66,22 @@ class TaskLogs(db.Model):
     logtime=db.Column(db.DateTime,default=datetime.datetime.now())
     context=db.Column(db.Text)
 
+    def __init__(self,id,user_id,deploytype,family,models,version,status,failure_time,context):
+        self.id=id
+        self.user_id=user_id
+        self.deploytype=deploytype
+        self.family=family
+        self.models=models
+        self.version=version
+        self.status=status
+        self.failure_times=failure_time
+        self.logtime=db.func.now()
+        self.context=context
+
+    def weekdeploycount(self):
+        pass
+
+
 class DeployType(db.Model):
     __tablename__='deploytype'
     type_id=db.Column(db.String(50),primary_key=True,unique=True)

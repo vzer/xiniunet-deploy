@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/deploy/static/css/application.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/css/bootstrap.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/css/bootstrap.min.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/css/common.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/css/font-awesome.min.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/images/favicon.ico" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/images/xiniu.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/js/bootstrap.min.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/js/jquery-2.0.0.min.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/static/js/jquery-ui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/deploy/templates/404.html" charset="UTF-8" />
+  </component>
 </project>

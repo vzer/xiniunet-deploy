@@ -6,6 +6,10 @@ from models import TaskLogs,Models,User,createWorkOrder,makeMd5
 from . import app ,db
 from development import cntl_q,data_q
 import datetime
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 @app.errorhandler(404)
 def internal_error(error):
     return render_template('404.html'), 404
@@ -99,18 +103,22 @@ def regedit():
         return redirect(url_for("login"))
 
 @app.route("/statis/")
-@app.route("/statis/<selecttimes>")
-def statis(selecttimes="ALL"):
-    if selecttimes=="ALL":
-        return render_template("statistics.html")
-    elif selecttimes=="today":
-        return render_template("statistics.html")
-    elif selecttimes=="week":
-        return render_template("statistics.html")
-    elif selecttimes=="month":
-        return render_template("statistics.html")
-    elif selecttimes=="year":
-        return render_template("statistics.html")
-    return render_template("statistics.html")
+def statis():
+    thisweekmodel=db.session.query(TaskLogs.deploytype,TaskLogs.models,db.func.count(TaskLogs.models).label("count")).filter(db.func.yearweek(db.func.date_format(TaskLogs.logtime,"%Y-%m-%d"))==db.func.yearweek(db.func.now()),TaskLogs.status=="SUCCESS").group_by(TaskLogs.deploytype,TaskLogs.models)
+    thisweektotal=thisweekmodel.count()
+    thisweeklist=thisweekmodel.all()
+
+    lastweekmodel=db.session.query(TaskLogs.deploytype,TaskLogs.models,db.func.count(TaskLogs.models).label("count")).filter(db.func.yearweek(db.func.date_format(TaskLogs.logtime,"%Y-%m-%d"))==db.func.yearweek(db.func.now())-1,TaskLogs.status=="SUCCESS").group_by(TaskLogs.deploytype,TaskLogs.models)
+    lastweektotal=lastweekmodel.count()
+    lastweeklist=lastweekmodel.all()
+    #stmt=db.session.query(TaskLogs.deploytype.label("deploytype"),TaskLogs.models.label("models"),db.func.max(TaskLogs.logtime).label("logtime")).group_by(TaskLogs.deploytype,TaskLogs.models).subquery()
+    #current_version=db.session.query(TaskLogs.deploytype,TaskLogs.family,TaskLogs.models,TaskLogs.version,TaskLogs.logtime).join(stmt,TaskLogs.deploytype==stmt.deploytype,TaskLogs.models==stmt.models,TaskLogs.logtime==stmt.logtime).filter(TaskLogs.status=="SUCCESS").order_by(TaskLogs.logtime).all()
+    current_version=db.session.execute("""SELECT A.deploytype,A.family,A.models,A.version,A.logtime FROM tasklog AS A INNER JOIN(
+	SELECT deploytype as deploytype,models as models,MAX(logtime) AS logtime FROM tasklog GROUP BY deploytype,models
+) as B
+on A.deploytype=B.deploytype and A.models=B.models AND A.logtime=B.logtime
+WHERE `status`='SUCCESS' ORDER BY logtime desc""")
+    current_datetime=datetime.datetime.now()
+    return render_template("statistics.html",thisweektotal=thisweektotal,thisweeklist=thisweeklist,lastweektotal=lastweektotal,lastweeklist=lastweeklist,current_datetime=current_datetime,current_version=current_version)
 
 

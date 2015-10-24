@@ -246,17 +246,9 @@ def deployWebWork(username,passwd,localServicePath,remoteTarPath,version,host,pr
         return (1,failureTimes)
 
 def work(cntl_q, data_q):
-    #query=ksession.query(ServerInfo)
-    #host_list=query.filter(ServerInfo.servicename=='deploy').first()
-    #username=host_list.account
     username="root"
-    #passwd=host_list.password
     passwd="xiniunet_#*2105"
-    #host=host_list.ip
     host="112.124.121.74"
-    #query=ksession.query(User)
-    #user_list=query.filter(User.user_account=='zhangcunlei').first()
-    #localServicePath=user_list.user_account
     item=data_q.get()
     workOrder=item['workOrder']
     family=item['typename']
@@ -266,7 +258,7 @@ def work(cntl_q, data_q):
     git_url=item["git_url"]
     localServicePath=item["user_account"]
     deploytype=item["deployType"]
-    info=TaskLogs(id=workOrder,user_id=localServicePath,deploytype=deploytype,family=family,models=projectName,version=version,status='DEPLOYING',failure_times=0,context="空")
+    info=TaskLogs(id=workOrder,user_id=localServicePath,deploytype=deploytype,family=family,models=projectName,version=version,status="DEPLOYING",failure_time=0,context="NO_LOG")
     db.session.add(info)
     db.session.commit()
     if family=='Service':
@@ -277,7 +269,7 @@ def work(cntl_q, data_q):
         status='SUCCESS'
     else:
         status='FAILURE'
-    info=TaskLogs(id=workOrder,user_id=localServicePath,deploytype=deploytype,family=family,models=projectName,version=version,status=status,failure_times=failureTimes,context=logText)
+    info=TaskLogs(id=workOrder,user_id=localServicePath,deploytype=deploytype,family=family,models=projectName,version=version,status=status,failure_time=failureTimes,context=logText)
     db.session.merge(info)
     db.session.commit()
     cntl_q.put({'event':'exit','pid':os.getpid()})
